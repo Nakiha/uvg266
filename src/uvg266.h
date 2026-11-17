@@ -595,6 +595,13 @@ typedef struct uvg_picture {
     int8_t *roi_array;
   } roi;
 
+  /** Per-input controls for the single-tree, low-delay live profile.
+   * A requested ordinary I slice preserves the picture order and DPB.
+   * A nonzero qp_plus1 selects the exact slice QP (QP + 1) without native RC.
+   * Zero-initialized fields preserve the upstream behavior.
+   */
+  uint8_t live_force_intra;
+  uint8_t live_qp_plus1;
 } uvg_picture;
 
 /**

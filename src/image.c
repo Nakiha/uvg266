@@ -101,6 +101,8 @@ uvg_picture * uvg_image_alloc(enum uvg_chroma_format chroma_format, const int32_
     im->v = im->data[COLOR_V] = &im->fulldata[luma_size - padding_before_first_pixel_luma + chroma_size + padding_before_first_pixel_chroma];
   }
 
+  im->live_force_intra = 0;
+  im->live_qp_plus1 = 0;
   im->pts = 0;
   im->dts = 0;
 
@@ -197,6 +199,8 @@ uvg_picture *uvg_image_make_subimage(uvg_picture *const orig_image,
   im->pts = 0;
   im->dts = 0;
 
+  im->live_force_intra = orig_image->live_force_intra;
+  im->live_qp_plus1 = orig_image->live_qp_plus1;
   im->roi = orig_image->roi;
 
   return im;

@@ -1065,6 +1065,8 @@ void uvg_set_picture_lambda_and_qp(encoder_state_t * const state)
       state->frame->QP = CLIP_TO_QP(ctrl->cfg.qp + ctrl->cfg.intra_qp_offset);
     }
 
+    const unsigned external_qp = state->tile->frame->source->live_qp_plus1;
+    if (external_qp) state->frame->QP = external_qp - 1;
     state->frame->lambda = qp_to_lambda(state, state->frame->QP);
   }
 }

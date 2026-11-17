@@ -1789,7 +1789,7 @@ static double search_cu(
   bool can_split[6];
   bool is_implicit = uvg_get_possible_splits(state, cu_loc, split_tree, tree_type, can_split);
 
-  const int slice_type = state->frame->is_irap ? (tree_type == UVG_CHROMA_T ? 2 : 0) : 1;
+  const int slice_type = state->frame->slicetype == UVG_SLICE_I ? (tree_type == UVG_CHROMA_T ? 2 : 0) : 1;
   const int max_btd = state->encoder_control->cfg.max_btt_depth[slice_type];
   int minimum_split_amount;
   switch (slice_type) {

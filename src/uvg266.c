@@ -322,7 +322,13 @@ static int uvg266_field_encoding_adapter(uvg_encoder *enc,
                                           uvg_picture **src_out,
                                           uvg_frame_info *info_out)
 {
-  if (enc->control->cfg.source_scan_type == UVG_INTERLACING_NONE) {
+  const uvg_config *cfg = &enc->control->cfg;
+  if (pic_in && (pic_in->live_force_intra || pic_in->live_qp_plus1)) {
+    if (cfg->source_scan_type != UVG_INTERLACING_NONE || !cfg->gop_lowdelay ||
+        cfg->dual_tree || pic_in->live_qp_plus1 > 52 ||
+        (pic_in->live_qp_plus1 && cfg->rc_algorithm != UVG_NO_RC)) return 0;
+  }
+  if (cfg->source_scan_type == UVG_INTERLACING_NONE) {
     // For progressive, simply call the normal encoding function.
     return uvg266_encode(enc, pic_in, data_out, len_out, pic_out, src_out, info_out);
   }

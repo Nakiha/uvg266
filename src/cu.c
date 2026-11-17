@@ -415,7 +415,7 @@ int uvg_get_possible_splits(const encoder_state_t * const state,
 {
   const unsigned width = cu_loc->width;
   const unsigned height = cu_loc->height;
-  const int slice_type = state->frame->is_irap ? (tree_type == UVG_CHROMA_T ? 2 : 0) : 1;
+  const int slice_type = state->frame->slicetype == UVG_SLICE_I ? (tree_type == UVG_CHROMA_T ? 2 : 0) : 1;
 
   enum mode_type mode_type_parent = GET_MODETYPEDATA(&split_tree, split_tree.current_depth-1);
 

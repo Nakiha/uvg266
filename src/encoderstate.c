@@ -1976,8 +1976,8 @@ static void encoder_state_init_new_frame(encoder_state_t * const state, uvg_pict
   encoder_state_remove_refs(state);
   uvg_encoder_create_ref_lists(state);
 
-  // Set slicetype.
-  if (state->frame->is_irap) {
+  // A non-IRAP I slice keeps the reference history of the surrounding GOP.
+  if (state->frame->is_irap || frame->live_force_intra) {
     state->frame->slicetype = UVG_SLICE_I;
   } else if (state->frame->ref_LX_size[1] > 0) {
     state->frame->slicetype = UVG_SLICE_B;
